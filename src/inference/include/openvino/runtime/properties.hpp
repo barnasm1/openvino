@@ -607,6 +607,54 @@ static constexpr Property<element::Type, PropertyMutability::RW> kv_cache_precis
  */
 static constexpr Property<float, PropertyMutability::RW> activations_scale_factor{"ACTIVATIONS_SCALE_FACTOR"};
 
+/**
+ * @brief CompilationType type represents the type of blob that is passed to the compile_model.
+ *
+ * @ingroup ov_runtime_cpp_prop_api
+ */
+enum class CompilationType {
+    NORMAL_WITH_HEADER = 0,         // todo
+    WEIGHTLESS_WITH_HEADER = 1,     // todo
+    WEIGHTLESS_WITHOUT_HEADER = 2,  // todo
+};
+
+/** @cond INTERNAL */
+inline std::ostream& operator<<(std::ostream& os, const CompilationType& compilationType) {
+    switch (compilationType) {
+    case CompilationType::NORMAL_WITH_HEADER:
+        return os << "NORMAL_WITH_HEADER";
+    case CompilationType::WEIGHTLESS_WITH_HEADER:
+        return os << "WEIGHTLESS_WITH_HEADER";
+    case CompilationType::WEIGHTLESS_WITHOUT_HEADER:
+        return os << "WEIGHTLESS_WITHOUT_HEADER";
+    default:
+        OPENVINO_THROW("Unsupported compilation type");
+    }
+}
+
+inline std::istream& operator>>(std::istream& is, CompilationType& compilationType) {
+    std::string str;
+    is >> str;
+
+    if (str == "NORMAL_WITH_HEADER") {
+        compilationType = CompilationType::NORMAL_WITH_HEADER;
+    } else if (str == "WEIGHTLESS_WITH_HEADER") {
+        compilationType = CompilationType::WEIGHTLESS_WITH_HEADER;
+    } else if (str == "WEIGHTLESS_WITHOUT_HEADER") {
+        compilationType = CompilationType::WEIGHTLESS_WITHOUT_HEADER;
+    } else {
+        OPENVINO_THROW("Unsupported workload type: ", str);
+    }
+    return is;
+}
+/** @endcond */
+
+/**
+ * @brief Read-only property to select in which type the blob will be passed to the compile_model
+ * @ingroup ov_runtime_cpp_prop_api
+ */
+static constexpr Property<CompilationType> compilation_type{"COMPILATION_TYPE"};
+
 }  // namespace hint
 
 /**
