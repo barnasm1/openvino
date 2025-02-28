@@ -398,6 +398,8 @@ ov::Any Plugin::get_property(const std::string& name, const ov::AnyMap& options)
         return static_cast<decltype(ov::key_cache_group_size)::value_type>(engConfig.keyCacheGroupSize);
     } else if (name == ov::value_cache_group_size) {
         return static_cast<decltype(ov::value_cache_group_size)::value_type>(engConfig.valueCacheGroupSize);
+    } else if (name == ov::hint::compilation_type) {
+        return engConfig.compilationType;
     }
     return get_ro_property(name, options);
 }
