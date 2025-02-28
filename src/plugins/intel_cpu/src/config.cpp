@@ -383,6 +383,18 @@ void Config::readProperties(const ov::AnyMap& prop, const ModelType modelType) {
                 OPENVINO_THROW("Wrong value for property key ", ov::cache_encryption_callbacks.name());
             }
         } else if (key == ov::internal::caching_with_mmap.name()) {
+        } else if (key == ov::hint::compilation_type.name()) {
+            try {
+                compilationType = val.as<ov::hint::CompilationType>();
+            } catch (const ov::Exception&) {
+                OPENVINO_THROW(
+                    "Wrong value ",
+                    val.as<std::string>(),
+                    "for property key ",
+                    key,
+                    ". Expected only "
+                    "ov::hint::CompilationType::NORMAL_WITH_HEADER/WEIGHTLESS_WITH_HEADER/WEIGHTLESS_WITHOUT_HEADER.");
+            }
         } else {
             OPENVINO_THROW("NotFound: Unsupported property ", key, " by CPU plugin.");
         }

@@ -99,6 +99,7 @@ struct Config {
     ov::element::Type inferencePrecision = ov::element::f32;
     bool inferencePrecisionSetExplicitly = false;
     ov::hint::ExecutionMode executionMode = ov::hint::ExecutionMode::PERFORMANCE;
+    ov::hint::CompilationType compilationType = ov::hint::CompilationType::NORMAL_WITH_HEADER;
 
     DenormalsOptMode denormalsOptMode = DenormalsOptMode::DO_Keep;
 
